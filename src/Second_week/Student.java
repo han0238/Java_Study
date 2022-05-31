@@ -1,42 +1,19 @@
 package Second_week;
 
-public class Student {
+public class Student extends Human {
 
-  private String name = "";
-  private int ban = 0;
-  private int no = 0;
-  private int kor = 0;
-  private int eng = 0;
+  private int no;
+  private int kor;
+  private int eng;
 
   // 내가 정의한 생성자가 1개라도 있으면 JVM이 기본생성자를 생성해 주지 않는다.
   public Student(String name, int ban, int no, int kor, int eng) {
-    this.name = name;
-    this.ban = ban;
+    super(name, ban);
     this.no = no;
     this.kor = kor;
     this.eng = eng;
   }
 
-  public Student() {
-
-  }
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getBan() {
-    return ban;
-  }
-
-  public void setBan(int ban) {
-    this.ban = ban;
-  }
 
   public int getNo() {
     return no;
@@ -74,8 +51,8 @@ public class Student {
   @Override
   public String toString() {
     return "Student{" +
-        "name='" + name + '\'' +
-        ", ban=" + ban +
+        "name='" + getName() + '\'' +
+        ", ban=" + getBan() +
         ", no=" + no +
         ", kor=" + kor +
         ", eng=" + eng +
@@ -84,19 +61,16 @@ public class Student {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof Student) {
-      Student target = (Student) obj;
-      if (target.name.equals(this.name)
-          && target.ban == this.ban
-          && target.no == this.no) {
-        return true;
-      } else {
-        return false;
-      }
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || this.getClass() != obj.getClass()) {
+      return false;
+    }
+    if (super.equals(obj)) {
+      return no == ((Student) obj).no;
     } else {
       return false;
     }
-
   }
-
 }
