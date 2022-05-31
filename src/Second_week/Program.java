@@ -8,50 +8,27 @@ public class Program {
 
 
   public static void main(String[] args) {
-//
-//    switch (new Scanner(System.in).nextLine()) {
-//      case "하나":
-//        System.out.println("호호");5
-//      case "둘":
-//        System.out.println("하하");
-//      default:
-//        System.out.println("ㅌㅋㅋㅋㅋ");
-//
-//    }
 
     List<Student> ban = new ArrayList<>();
-    Student first = new Student("김", 1, 1, 40, 50);
-    //Student second = new Student("이", 1, 2, 45, 90);
+    Student first = new Student("김", 1, 1, 40, 50); // 더미
     ban.add(first);
-    //ban.add(second);
+
     loop:
     while (true) {
-      int select = q("1번 [학생정보입력] 2번 [모든학생정보출력] 3번 [반총점] 4번 [반평균] 5번 [종료]");
+      int select = input("1번 [학생정보입력] 2번 [모든학생정보출력] 3번 [반총점] 4번 [반평균] 5번 [종료]");
 
       switch (select) {
         case 1:
-          System.out.println(ban.size() + 1 + "번 학생 정보");
-          ban.add(Scan.scan());
+          one(ban);
           break;
         case 2:
-          int banCheck = output(ban, q("반을 입력하세요"));
-          System.out.println(banCheck == 0 ? "반이 없습니다." : "");
-          while (true) {
-            int edit = q("[1] 수정 [2] 나가기");
-            if (edit == 1) {
-              studentEdit(ban, q("수정할 번호를 입력하세요."));
-            } else if (edit == 2) {
-              break;
-            }
-          }
+          two(ban);
           break;
         case 3:
-          int total = banTotal(ban, q("반을 입력하세요."));
-          System.out.println(total == 0 ? "반이 없습니다." : total);
+          three(ban);
           break;
         case 4:
-          float average = banAverage(ban, q("반을 입력하세요."));
-          System.out.println(average == 0 ? "반이 없습니다." : average);
+          four(ban);
           break;
         case 5:
           break loop; // 반목문 종료
@@ -63,18 +40,45 @@ public class Program {
   // 3번을 입력하면 프로그램을 종료한다. view : 1, 2, 3 선택 하세요.
   // 반 평균 / 반 총점
 
+  public static void one(List<Student> ban) {
+    System.out.println(ban.size() + 1 + "번 학생 정보");
+    ban.add(Scan.scan());
+  }
 
-  public static int q(String q) {
-    System.out.println(q);
+  public static void two(List<Student> ban) {
+    int banCheck = output(ban, input("반을 입력하세요"));
+    System.out.println(banCheck == 0 ? "반이 없습니다." : "");
+    while (true) {
+      int edit = input("[1] 수정 [2] 나가기");
+      if (edit == 1) {
+        studentEdit(ban, input("수정할 번호를 입력하세요."));
+      } else if (edit == 2) {
+        break;
+      }
+    }
+  }
+
+  public static void three(List<Student> ban) {
+    int total = banTotal(ban, input("반을 입력하세요."));
+    System.out.println(total == 0 ? "반이 없습니다." : total);
+  }
+
+  public static void four(List<Student> ban) {
+    float average = banAverage(ban, input("반을 입력하세요."));
+    System.out.println(average == 0 ? "반이 없습니다." : average);
+  }
+
+  public static int input(String i) {
+    System.out.println(i);
     return new Scanner(System.in).nextInt();
   }
 
 
-  public static int output(List<Student> students, int ban) {
+  public static int output(List<Student> students, int input) {
     int count = 0;
 
     for (int i = 0; i < students.size(); i++) {
-      if (ban == students.get(i).getBan()) {
+      if (input == students.get(i).getBan()) {
         count++;
         System.out.println(students.get(i));
       }
@@ -113,14 +117,14 @@ public class Program {
   }
 
   public static float banAverage(List<Student> ban, int check) {
-    float bann = ban.size();
+    float banAv = ban.size();
 
     for (int i = 0; i < ban.size(); i++) {
       if (check == ban.get(i).getBan()) {
         System.out.println();
       }
     }
-    return banTotal(ban, check) / bann;
+    return banTotal(ban, check) / banAv;
   }
 }
 
