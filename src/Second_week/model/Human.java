@@ -1,8 +1,8 @@
-package Second_week;
+package Second_week.model;
 
 import java.util.Objects;
 
-public class Human {
+public class Human extends AbsCls implements InterfaceObject {
 
   private String name;
   private int ban;
@@ -13,12 +13,8 @@ public class Human {
     this.ban = ban;
   }
 
-  public void test() {
-    Human g = new Human(null, 0);
-    String aa = "haha";
-    g.equals(aa);
-  }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -27,6 +23,7 @@ public class Human {
     this.name = name;
   }
 
+  @Override
   public int getBan() {
     return ban;
   }
