@@ -19,6 +19,7 @@ public class SchoolService {
   }
 
   public int selectBan(List<Teacher> ban) {
+
     Teacher tc = tOutput(ban, input("반을 입력하세요."));
     return tc != null ? tc.getBan() : 0;
   }
@@ -123,5 +124,8 @@ public class SchoolService {
       }
     }
     return result;
+  }
+
+  public void addTeacher(List<Teacher> teachers) {
   }
 }

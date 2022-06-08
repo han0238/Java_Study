@@ -6,4 +6,5 @@ public abstract class AbsCls {
 
   public abstract int getBan();
 
+  
 }

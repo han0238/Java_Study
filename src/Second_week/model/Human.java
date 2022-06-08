@@ -1,8 +1,9 @@
 package Second_week.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Human extends AbsCls implements InterfaceObject {
+public class Human extends AbsCls implements Serializable {
 
   private String name;
   private int ban;

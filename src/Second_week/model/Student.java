@@ -1,8 +1,10 @@
 package Second_week.model;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Student extends Human {
+public class Student extends Human implements Serializable {
+
 
   private int no;
   private int kor;

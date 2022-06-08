@@ -3,6 +3,12 @@ package Second_week;
 import Second_week.model.Student;
 import Second_week.model.Teacher;
 import Second_week.service.SchoolService;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +26,35 @@ public class Program {
     List<Student> ban = new ArrayList<>();
     List<Teacher> teachers = new ArrayList<>();
 
-    Teacher first = new Teacher("김두한", "남", 1);
-    Teacher second = new Teacher("하야시", "남", 2);
+    try (FileInputStream fis = new FileInputStream("School");
+        ObjectInputStream ois = new ObjectInputStream(fis)) {
 
-    teachers.add(first);
-    teachers.add(second);
+      ban = (List<Student>) ois.readObject();
+      teachers = (List<Teacher>) ois.readObject();
+
+    } catch (FileNotFoundException e) {
+
+    } catch (IOException e) {
+      e.printStackTrace();
+
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
 
     loop_1:
     while (true) {
-      service.setBan(service.selectBan(teachers));
+      int selectT = service.input("1번 [선생정보입력] 2번 [선생님 반 선택]");
+      switch (selectT) {
+        case 1:
+          System.out.println("선생님을 등록합니다.");
+          Teacher th = Teacher.build(service.input("반 : "));
+          teachers.add(th);
+          System.out.println("선생님 등록이 완료되었습니다.");
+          break;
+        case 2:
+          service.setBan(service.selectBan(teachers));
+          break;
+      }
       if (service.getBan() == 0) {
         System.out.println("반이 없습니다.");
         continue;
@@ -55,15 +81,20 @@ public class Program {
             break loop_2; // 반목문 종료
         }
       }
-      int next = service.input("다른반을 선택하시겠습니까? 1번 : 반선택 , 2번 종료");
+      int next = service.input("다른반을 선택하시겠습니까? 1번 : 반선택 , 2번 저장 후 종료");
       if (next == 2) {
+        try (FileOutputStream fos = new FileOutputStream("School");
+            ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+          oos.writeObject(ban);
+          oos.writeObject(teachers);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
         break loop_1;
       }
 
     }
   }
-
-
 }
 
 // 1. 토탈과 같이 반의 평균을 구하시오.
